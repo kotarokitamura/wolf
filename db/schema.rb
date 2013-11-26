@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 20131126034945) do
 
   create_table "other_accounts", force: true do |t|
     t.integer  "user_id"
+    t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.string   "image_url"
