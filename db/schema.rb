@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20131126034945) do
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
   create_table "user_relationships", force: true do |t|
-    t.integer  "follower"
-    t.integer  "followed"
+    t.integer  "follower_id"
+    t.integer  "followed_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
