@@ -32,14 +32,19 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'thin'
+  gem 'pry-rails'
+  gem 'webrat'
+end
 
-# Use unicorn as the app server
-# gem 'unicorn'
+group :development do
+  gem 'pry-debugger'
+  gem 'erb2haml'
+end
 
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
+# To use login system of Facebook, Twitter etc..
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
