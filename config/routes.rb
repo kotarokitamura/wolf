@@ -1,6 +1,5 @@
 Wolf::Application.routes.draw do
   #for omniauth
-  match "/auth/:provider/callback" => "sessions#create"
-  match "/signout" => "sessions#destroy"
-
+  resources :sessions, only: :destroy, as: "logout"
+  get "/auth/:provider/callback", to: "sessions#create", as: "sessions"
 end
