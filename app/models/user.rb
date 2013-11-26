@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :posts
+
   validates :uid, presence: :true
   validates :name, presence: :true
 
