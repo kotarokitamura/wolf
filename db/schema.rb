@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 20131126005611) do
   create_table "users", force: true do |t|
     t.string   "uid"
     t.string   "name"
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "image_url"
     t.string   "email"
     t.string   "access_token"
