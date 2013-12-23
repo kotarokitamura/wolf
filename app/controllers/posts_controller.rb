@@ -1,7 +1,13 @@
 class PostsController < ApplicationController
   def show
-    #get information from facebook
-    graph = Koala::Facebook::API.new(current_user.access_token)
-    @contents = graph.get_connections("me", "feed", :limit => 5)
+    #Get latest content of own user
+    @contents = (Post.find_by user_id: current_user.id) || Post.new
+    @contents.save_latest_contents(current_user)
+    #get :post_id contents
+    @post = Post.find(params[:id])
+  end
+
+  private
+  def post_params
   end
 end

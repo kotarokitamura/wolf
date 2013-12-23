@@ -4,7 +4,8 @@ class CreatePosts < ActiveRecord::Migration
       t.references :user, index: true
       t.string :title
       t.string :body
-      t.integer :hold_flag
+      t.integer :hold_flag, :default => 0
+      t.timestamp :posted_at
 
       t.timestamps
     end
