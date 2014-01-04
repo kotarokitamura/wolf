@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :uid
 
+  # FacebookのAuthを確立する
+  # Get facebook auth only
   def self.create_with_omniauth(auth)
     return false if auth["provider"] != "facebook"
     create! do |user|
