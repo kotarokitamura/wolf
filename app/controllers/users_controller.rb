@@ -7,4 +7,10 @@ class UsersController < ApplicationController
     @menbers = []
     relations.map {|relation| @menbers << User.where(id: relation.followed_id).first}
   end
+
+  def all_users
+    # フォーローするために、すべてのUserを表示
+    # Show all users to follow
+    @all_users = Users.all
+  end
 end
