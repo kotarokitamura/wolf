@@ -7,9 +7,18 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :uid
 
+    # ログインユーザーがフォローしているユーザーを取得
+    # get users who current user following
+  def self.get_following_users(current_user)
+    relations = UserRelationship.where(follower_id: current_user.id)
+    menbers = []
+    relations.map {|relation| menbers << User.where(id: relation.followed_id).first}
+    menbers
+  end
+
   # FacebookのAuthを確立する
   # Get facebook auth only
-  def self.create_with_omniauth(auth)
+  def self.creat_with_omniauth(auth)
     return false if auth["provider"] != "facebook"
     create! do |user|
       user.uid = auth["uid"]
@@ -20,5 +29,13 @@ class User < ActiveRecord::Base
       user.last_name = auth["info"]["last_name"]
       user.access_token = auth["credentials"]["token"]
     end
+  end
+
+  # 現在のIDのユーザーをレシーバにFlagの値を格納する
+  def get_followed_flag(current_user)
+    menbers = User.get_following_users(current_user)
+    follow_id = []
+    menbers.map {|menber| follow_id << menber.id}
+    self.followed_flag = follow_id.include?(self.id)? 1 : 0
   end
 end
