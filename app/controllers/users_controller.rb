@@ -4,8 +4,6 @@ class UsersController < ApplicationController
   end
 
   def all_users
-    # フォーローするために、すべてのUserを表示
-    # Show all users to follow
     @all_users = User.all
   end
 
