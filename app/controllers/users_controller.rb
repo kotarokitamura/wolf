@@ -11,6 +11,6 @@ class UsersController < ApplicationController
   def all_users
     # フォーローするために、すべてのUserを表示
     # Show all users to follow
-    @all_users = Users.all
+    @all_users = User.all
   end
 end
