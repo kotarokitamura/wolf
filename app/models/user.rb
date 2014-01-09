@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  attr_accessor :followed_flag
   has_many :posts
 
   validates :uid, presence: :true

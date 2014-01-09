@@ -1,7 +1,7 @@
 Wolf::Application.routes.draw do
   #get "users/index"
   #get "posts/show"
-  resources :users, :only => [:index,:all_usres], :shallow => true do
+  resources :users, :only => [:index,:update,:show,:all_usres], :shallow => true do
     member do
       get :all_users
     end
