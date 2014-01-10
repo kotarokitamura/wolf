@@ -1,10 +1,18 @@
 class UsersController < ApplicationController
   def index
-    # ログインユーザーがフォローしているユーザーを取得
-    # Get users who current user following
-    current_user
-    relations = UserRelationship.where(follower_id: @current_user.id)
-    @menbers = []
-    relations.map {|relation| @menbers << User.where(id: relation.followed_id).first}
+    @menbers = User.get_following_users(current_user)
   end
+
+  def all_users
+    @all_users = User.all
+  end
+
+  def update
+  end
+
+  def show
+    @user = User.where(id: params[:id]).first
+    @user.get_followed_flag(current_user)
+  end
+
 end

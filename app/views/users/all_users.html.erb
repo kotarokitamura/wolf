@@ -1,0 +1,5 @@
+<h1>All users who use wolf</h1>
+<% @all_users.each do |user| %>
+  <%= link_to user.name, controller: "users", action: "show", id: user.id %>
+  <br>
+<% end %>
