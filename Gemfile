@@ -51,3 +51,6 @@ gem 'omniauth-facebook'
 
 # To use facebook graph
 gem 'koala'
+
+# To Tweet and get some tweets
+gem 'twitter'
