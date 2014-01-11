@@ -15,4 +15,7 @@ class UsersController < ApplicationController
     @user.get_followed_flag(current_user)
   end
 
+  def other_accounts
+  end
+
 end
