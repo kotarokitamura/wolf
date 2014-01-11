@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :uid
 
-    # ログインユーザーがフォローしているユーザーを取得
-    # get users who current user following
+  # ログインユーザーがフォローしているユーザーを取得
+  # get users who current user following
   def self.get_following_users(current_user)
     relations = UserRelationship.where(follower_id: current_user.id)
     menbers = []
@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   # FacebookのAuthを確立する
   # Get facebook auth only
-  def self.creat_with_omniauth(auth)
+  def self.create_with_omniauth(auth)
     return false if auth["provider"] != "facebook"
     create! do |user|
       user.uid = auth["uid"]
