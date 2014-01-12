@@ -3,11 +3,11 @@ class Post < ActiveRecord::Base
   TWITTER_CONSUMER_KEY = "qQb1VxwVDyVJ4mRvmaZ0g"
   TWITTER_CONSUMER_SECRET = "oO6V2rIlJOAJ1LSf5qgzd0KSkJCVvl3SfjSGEmr98"
 
-  def save_latest_contents(current_user)
-    self.user_id = current_user.id
+  def save_latest_contents(user)
+    self.user_id = user.id
     contents = []
-    contents <<  last_twitter_contents(current_user)
-    contents <<  last_facebook_contents(current_user)
+    contents <<  last_twitter_contents(user) unless user.other_accounts.where(provider: "twitter").first.nil?
+    contents <<  last_facebook_contents(user)
     contents.each do |content|
       judge = []
       judge << self.content_nil?
@@ -15,19 +15,19 @@ class Post < ActiveRecord::Base
       self.body = content.body if judge.include?(true)
       self.posted_at = content.posted_at if judge.include?(true)
     end
-    Post.exists?(user_id: current_user.id).nil? ? self.save : self.update(user_id: current_user.id)
+    Post.exists?(user_id: user.id).nil? ? self.save : self.update(user_id: user.id)
   end
 
   def content_new?(content)
-    self.posted_at < content.posted_at
+    self.posted_at.nil? ? true : (self.posted_at < content.posted_at)
   end
 
   def content_nil?
     self.posted_at.nil?
   end
 
-  def last_twitter_contents(current_user)
-    user_twitter_account = current_user.other_accounts.where(provider: "twitter").first
+  def last_twitter_contents(user)
+    user_twitter_account = user.other_accounts.where(provider: "twitter").first
     client = Twitter::REST::Client.new do |config|
       config.consumer_key = TWITTER_CONSUMER_KEY
       config.consumer_secret = TWITTER_CONSUMER_SECRET
@@ -40,8 +40,8 @@ class Post < ActiveRecord::Base
     last_tweet
   end
 
-  def last_facebook_contents(current_user)
-    graph = Koala::Facebook::API.new(current_user.access_token)
+  def last_facebook_contents(user)
+    graph = Koala::Facebook::API.new(user.access_token)
     contents = graph.get_connections("me", "feed")
 
     contents.sort!{ |a, b| b[:updated_time] <=> a[:updated_time] }

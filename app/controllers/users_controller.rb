@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   def index
     @menbers = User.get_following_users(current_user)
+    @menbers.each do |user|
+      user.posts.first.save_latest_contents(user)
+    end
   end
 
   def all_users
