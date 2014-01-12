@@ -39,4 +39,8 @@ class User < ActiveRecord::Base
     menbers.map {|menber| follow_id << menber.id}
     self.followed_flag = follow_id.include?(self.id)? 1 : 0
   end
+
+  def update_last_checked_time
+    self.update_attributes(last_checked_at: Time.now)
+  end
 end
