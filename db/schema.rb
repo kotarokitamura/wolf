@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20131126034945) do
     t.string   "image_url"
     t.string   "email"
     t.string   "access_token"
+    t.string   "access_token_secret"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
