@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessor :followed_flag
   has_many :posts
+  has_many :other_accounts
 
   validates :uid, presence: :true
   validates :name, presence: :true

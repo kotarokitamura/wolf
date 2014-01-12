@@ -8,6 +8,7 @@ class CreateOtherAccounts < ActiveRecord::Migration
       t.string :image_url
       t.string :email
       t.string :access_token
+      t.string :access_token_secret
 
       t.timestamps
     end

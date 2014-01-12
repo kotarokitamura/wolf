@@ -8,6 +8,7 @@ class OtherAccount < ActiveRecord::Base
       other_account.uid = auth["uid"]
       other_account.name = auth["info"]["name"]
       other_account.access_token = auth["credentials"]["token"]
+      other_account.access_token_secret = auth["credentials"]["secret"]
       other_account.image_url = auth["info"]["image"]
     end
   end
