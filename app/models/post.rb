@@ -2,10 +2,10 @@ class Post < ActiveRecord::Base
   belongs_to :user
 
   def save_latest_contents(current_user)
-    get_facebook_contents(current_user)
+    save_facebook_contents(current_user)
   end
 
-  def get_facebook_contents(current_user)
+  def save_facebook_contents(current_user)
     # アクセストークンを利用して、APIで接続
     # the first step is get only latest post
     graph = Koala::Facebook::API.new(current_user.access_token)
