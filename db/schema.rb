@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20131126034945) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "body"
+    t.string   "provider"
     t.integer  "hold_flag",  default: 0
     t.datetime "posted_at"
     t.datetime "created_at"
