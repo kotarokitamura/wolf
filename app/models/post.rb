@@ -12,8 +12,12 @@ class Post < ActiveRecord::Base
       judge = []
       judge << self.content_nil?
       judge << self.content_new?(content)
-      self.body = content.body if judge.include?(true)
-      self.posted_at = content.posted_at if judge.include?(true)
+      if judge.include?(true)
+        self.body = content.body 
+        self.posted_at = content.posted_at
+        self.provider = content.provider
+      else
+      end
     end
     Post.exists?(user_id: user.id).nil? ? self.save : self.update(user_id: user.id)
   end
@@ -37,6 +41,7 @@ class Post < ActiveRecord::Base
     last_tweet =  Post.new
     last_tweet.body = client.user_timeline(user_twitter_account.uid.to_i, :count => 1).first.text
     last_tweet.posted_at = client.user_timeline(user_twitter_account.uid.to_i, :count => 1).first.created_at
+    last_tweet.provider = "twitter"
     last_tweet
   end
 
@@ -53,6 +58,7 @@ class Post < ActiveRecord::Base
       last_content.posted_at = content["updated_time"]
       break
     end
+     last_content.provider = "facebook"
     last_content
   end
 end
