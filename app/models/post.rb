@@ -6,8 +6,9 @@ class Post < ActiveRecord::Base
   def save_latest_contents(user)
     self.user_id = user.id
     contents = []
-    contents <<  last_twitter_contents(user) unless user.other_accounts.where(provider: "twitter").first.nil?
-    contents <<  last_facebook_contents(user)
+    contents << Post.where(user_id: user.id).first
+    contents << last_twitter_contents(user) unless user.other_accounts.where(provider: "twitter").first.nil?
+    contents << last_facebook_contents(user)
     contents.each do |content|
       judge = []
       judge << self.content_nil?
