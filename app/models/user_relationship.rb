@@ -1,5 +1,6 @@
 class UserRelationship < ActiveRecord::Base
-  def self.get_relationship(current_user,params)
-    UserRelationship.where(["follower_id = ? and followed_id = ?", current_user.id, params[:id]]).first
+  belongs_to :user
+  def update_last_checked_time
+    self.update_attributes(last_checked_at: Time.now)
   end
 end
