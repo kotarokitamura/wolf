@@ -7,4 +7,21 @@ class PostsController < ApplicationController
     contents.save_latest_contents(current_user)
     @post = Post.find(params[:id])
   end
+
+  def new
+    @post = current_user.posts.build
+  end
+
+  def create
+    post = current_user.posts.build(post_params)
+    post.provider = "wolf"
+    post.posted_at = Time.now
+    old_post = Post.where(user_id: post.user_id).first
+    old_post.nil? ? post.save : old_post.update_attributes(title: post.title, body: post.body, provider: post.provider)
+  end
+
+  private
+    def post_params
+      params.require(:post).permit(:body, :title, :user_id)
+    end
 end
