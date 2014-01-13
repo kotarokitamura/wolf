@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   attr_accessor :followed_flag
   has_many :posts
   has_many :other_accounts
+  has_many :user_relationships
 
   validates :uid, presence: :true
   validates :name, presence: :true
@@ -11,7 +12,7 @@ class User < ActiveRecord::Base
   # ログインユーザーがフォローしているユーザーを取得
   # get users who current user following
   def self.get_following_users(current_user)
-    relations = UserRelationship.where(follower_id: current_user.id)
+    relations = UserRelationship.where(user_id: current_user.id)
     menbers = []
     relations.map {|relation| menbers << User.where(id: relation.followed_id).first}
     menbers
@@ -38,9 +39,5 @@ class User < ActiveRecord::Base
     follow_id = []
     menbers.map {|menber| follow_id << menber.id}
     self.followed_flag = follow_id.include?(self.id)? 1 : 0
-  end
-
-  def update_last_checked_time
-    self.update_attributes(last_checked_at: Time.now)
   end
 end

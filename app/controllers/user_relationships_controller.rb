@@ -4,8 +4,7 @@ class UserRelationshipsController < ApplicationController
   def update
     case params[:user][:followed_flag]
     when FOLLOW_FLAG
-      relationship = UserRelationship.get_relationship(current_user,params)
-      UserRelationship.create(follower_id: current_user.id, followed_id: params[:id]) if relationship.nil?
+      relationship = current_user.user_relationships.where(["user_id = ? and followed_id = ?", current_user.id, params[:id]]).first || current_user.user_relationships.build(followed_id: params[:id]).save
     when UNFOLLOW_FLAG
       relationship = UserRelationship.get_relationship(current_user,params)
       UserRelationship.delete(relationship.id) unless relationship.nil?
