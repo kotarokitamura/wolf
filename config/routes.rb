@@ -6,7 +6,7 @@ Wolf::Application.routes.draw do
       post :twitter
       get :other_accounts 
     end
-    resources :posts, :only => [:show]
+    resources :posts, :only => [:show, :new, :update]
   end
 
   #for omniauth
