@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   def index
     @menbers = User.get_following_users(current_user)
     @menbers.each do |user|
-      user.posts.first.nil? ? user.post.build.save_latest_contents(user) : user.posts.first.save_latest_contents(user)
+      user.posts.first.nil? ? user.posts.build.save_latest_contents(user) : user.posts.first.save_latest_contents(user)
     end
   end
 
