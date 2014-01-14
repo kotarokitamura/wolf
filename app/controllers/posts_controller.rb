@@ -1,11 +1,12 @@
 class PostsController < ApplicationController
+  before_filter  :check_already_sign_in
   def show
+    raise ForbiddenError if User.where(id: params[:id]).first.nil?
     user_relationship = current_user.user_relationships.where(followed_id: params[:id]).first
     user_relationship.update_last_checked_time unless user_relationship.nil?
-
-    contents = (Post.find_by user_id: current_user.id) || Post.new
-    contents.save_latest_contents(current_user)
-    @post = Post.find(params[:id])
+    contents = (Post.find_by user_id: params[:id]) || User.where(id: params[:id]).first.posts.build
+    contents.save_latest_contents(contents.user)
+    @post = Post.where(user_id:params[:id]).first
     render 'own_post' if @post.user_id == current_user.id
   end
 
