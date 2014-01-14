@@ -1,6 +1,7 @@
 class UserRelationshipsController < ApplicationController
   UNFOLLOW_FLAG = "0"
   FOLLOW_FLAG = "1"
+  before_filter  :check_already_sign_in
   def update
     case params[:user][:followed_flag]
     when FOLLOW_FLAG

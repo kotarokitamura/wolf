@@ -6,6 +6,16 @@ class ApplicationController < ActionController::Base
 
   rescue_from Exception, :with => :handle_exceptions unless Rails.application.config.consider_all_requests_local
 
+
+  def check_already_sign_in
+    redirect_to root_path unless session[:user_id]
+    redirect_to root_path if User.where(id:session[:user_id]).nil?
+  end
+
+  def current_user_id?
+    params[:id].to_i == current_user.id.to_i
+  end
+
   private
   # Check and create session
   # セッションの確認と確立

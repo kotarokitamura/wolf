@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter  :check_already_sign_in
   def index
     @menbers = User.get_following_users(current_user)
     @menbers.each do |user|
@@ -10,16 +11,13 @@ class UsersController < ApplicationController
     @all_users = User.where.not(id: current_user.id)
   end
 
-  def update
-  end
-
   def show
     @user = User.where(id: params[:id]).first
     @user.get_followed_flag(current_user)
-    render 'self_show' if params[:id].to_i == current_user.id.to_i
+    render 'self_show' if current_user_id?
   end
 
   def other_accounts
+    raise ForbiddenError unless current_user_id?
   end
-
 end

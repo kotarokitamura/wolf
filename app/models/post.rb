@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   TWITTER_CONSUMER_SECRET = "oO6V2rIlJOAJ1LSf5qgzd0KSkJCVvl3SfjSGEmr98"
 
   def save_latest_contents(user)
-    return nil if user.posts.first.hold_flag == HOLD_ON
+    return nil if hold_flag_on?(user)
     self.user_id = user.id
     contents = []
     contents << Post.where(user_id: user.id).first
@@ -26,6 +26,11 @@ class Post < ActiveRecord::Base
       end
     end
     Post.exists?(user_id: user.id).nil? ? self.save : self.update(user_id: user.id)
+  end
+
+  def hold_flag_on?(user)
+    return false if user.posts.first.nil?
+    user.posts.first.hold_flag == HOLD_ON
   end
 
   def content_new?(content)
