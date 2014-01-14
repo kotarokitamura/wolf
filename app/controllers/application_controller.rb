@@ -4,10 +4,30 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  rescue_from Exception, :with => :handle_exceptions unless Rails.application.config.consider_all_requests_local
+
   private
-    # Check and create session
-    # セッションの確認と確立
-    def current_user
-      @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  # Check and create session
+  # セッションの確認と確立
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+
+  # resque from error
+  def handle_exceptions(e)
+    case e
+    when InvalidUrlError, ActiveRecord::RecordNotFound, ActionController::RoutingError, ActionController::UnknownAction
+      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+      logger.info("Rendering 404 with exception: #{e.message}")
+    when ForbiddenError
+      render :file => "#{Rails.root}/public/403.html", :status => 403, :layout => false
+      logger.info("Rendering 403 with exception: #{e.message}")
+    else
+      render :file => "#{Rails.root}/public/500.html", :status => 500, :layout => false
+      logger.info("Rendering 505 with exception: #{e.message}")
     end
+  end
 end
+
+class InvalidUrlError < ::ActionController::ActionControllerError; end
+class ForbiddenError < ::ActionController::ActionControllerError; end
