@@ -1,6 +1,12 @@
 <h1>Post#new</h1>
 
 <%= form_for(@post) do |f| %>
+  Body<br>
   <%= f.text_field :body %>
+  <br>
+  <br>
+  Pin
+  <%= f.check_box :hold_flag,{},1,0 %>
+  <br>
   <%= f.submit %>
 <% end %>
