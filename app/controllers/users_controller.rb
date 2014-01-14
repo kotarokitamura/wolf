@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def all_users
-    @all_users = User.all
+    @all_users = User.where.not(id: current_user.id)
   end
 
   def update
