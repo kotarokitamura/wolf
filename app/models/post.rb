@@ -14,7 +14,8 @@ class Post < ActiveRecord::Base
       judge << self.content_nil?
       judge << self.content_new?(content)
       if judge.include?(true)
-        self.body = content.body 
+        next if content.nil?
+        self.body = content.body
         self.posted_at = content.posted_at
         self.provider = content.provider
       else

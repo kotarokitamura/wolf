@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def all_users
-    @all_users = User.all
+    @all_users = User.where.not(id: current_user.id)
   end
 
   def update
@@ -16,6 +16,7 @@ class UsersController < ApplicationController
   def show
     @user = User.where(id: params[:id]).first
     @user.get_followed_flag(current_user)
+    render 'self_show' if params[:id].to_i == current_user.id.to_i
   end
 
   def other_accounts
