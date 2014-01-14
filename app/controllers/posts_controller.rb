@@ -6,6 +6,7 @@ class PostsController < ApplicationController
     contents = (Post.find_by user_id: current_user.id) || Post.new
     contents.save_latest_contents(current_user)
     @post = Post.find(params[:id])
+    render 'own_post' if @post.user_id = current_user.id
   end
 
   def new
@@ -20,6 +21,13 @@ class PostsController < ApplicationController
     old_post.nil? ? post.save : old_post.update_attributes(title: post.title, body: post.body, provider: post.provider, hold_flag: post.hold_flag)
 
     redirect_to new_post_path
+  end
+
+  def update
+    post = Post.where(user_id: current_user.id).first
+    new_post = Post.new(post_params)
+    post.update_attributes( hold_flag: new_post.hold_flag )
+    redirect_to post_path
   end
 
 

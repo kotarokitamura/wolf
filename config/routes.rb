@@ -1,5 +1,5 @@
 Wolf::Application.routes.draw do
-  resources :posts, :only => [:show, :new, :create]
+  resources :posts, :only => [:show, :new, :create, :update]
   resources :user_relationships, :only => [:update]
   resources :users, :only => [:index, :update, :show, :all_usres,:other_accounts, :twitter], :shallow => true do
     member do
