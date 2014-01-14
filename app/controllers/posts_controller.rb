@@ -17,11 +17,11 @@ class PostsController < ApplicationController
     post.provider = "wolf"
     post.posted_at = Time.now
     old_post = Post.where(user_id: post.user_id).first
-    old_post.nil? ? post.save : old_post.update_attributes(title: post.title, body: post.body, provider: post.provider)
+    old_post.nil? ? post.save : old_post.update_attributes(title: post.title, body: post.body, provider: post.provider, hold_flag: post.hold_flag)
   end
 
   private
     def post_params
-      params.require(:post).permit(:body, :title, :user_id)
+      params.require(:post).permit(:body, :title, :user_id, :hold_flag)
     end
 end
