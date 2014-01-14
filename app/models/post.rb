@@ -1,9 +1,12 @@
 class Post < ActiveRecord::Base
   belongs_to :user
+  HOLD_ON = 1
+  HOLD_OFF = 0
   TWITTER_CONSUMER_KEY = "qQb1VxwVDyVJ4mRvmaZ0g"
   TWITTER_CONSUMER_SECRET = "oO6V2rIlJOAJ1LSf5qgzd0KSkJCVvl3SfjSGEmr98"
 
   def save_latest_contents(user)
+    return nil if user.posts.first.hold_flag == HOLD_ON
     self.user_id = user.id
     contents = []
     contents << Post.where(user_id: user.id).first
@@ -18,6 +21,7 @@ class Post < ActiveRecord::Base
         self.body = content.body
         self.posted_at = content.posted_at
         self.provider = content.provider
+        self.hold_flag = HOLD_OFF
       else
       end
     end

@@ -1,0 +1,9 @@
+<h1> own post </h1>
+<h2><%= @post.body %></h2>
+
+<%= form_for(@post, :url => {action: "update"}) do |f| %>
+  Pin
+  <%= f.check_box :hold_flag,{},1,0 %>
+  <br>
+  <%= f.submit %>
+<% end %>
