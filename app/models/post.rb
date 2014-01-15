@@ -6,6 +6,12 @@ class Post < ActiveRecord::Base
   TWITTER_CONSUMER_KEY = "qQb1VxwVDyVJ4mRvmaZ0g"
   TWITTER_CONSUMER_SECRET = "oO6V2rIlJOAJ1LSf5qgzd0KSkJCVvl3SfjSGEmr98"
 
+  validates :body,
+            :length => {:maximum => 5000},
+            :presence => true
+  validates :user_id,
+            :presence => true
+
   def save_latest_contents(user)
     return nil if hold_flag_on?(user)
     self.user_id = user.id
@@ -72,7 +78,6 @@ class Post < ActiveRecord::Base
     contents = graph.get_connections("me", "feed")
 
     contents.sort!{ |a, b| b[:updated_time] <=> a[:updated_time] }
-
     last_content = Post.new
     contents.each do |content|
       next unless content.keys.include?("message")
