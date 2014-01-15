@@ -19,7 +19,7 @@ class PostsController < ApplicationController
     post.provider = "wolf"
     post.posted_at = Time.now
     old_post = Post.where(user_id: post.user_id).first
-    old_post.nil? ? post.save : old_post.update_attributes(title: post.title, body: post.body, provider: post.provider, hold_flag: post.hold_flag)
+    old_post.nil? ? post.save : old_post.update_attributes( body: post.body, provider: post.provider, hold_flag: post.hold_flag)
     Comment.destroy_all(post_id: old_post.id) unless old_post.nil?
     redirect_to new_post_path
   end
@@ -34,6 +34,6 @@ class PostsController < ApplicationController
 
   private
     def post_params
-      params.require(:post).permit(:body, :title, :user_id, :hold_flag)
+      params.require(:post).permit(:body, :user_id, :hold_flag)
     end
 end

@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
   end
 
   def index
+    @comments = Comment.where(post_id: params[:post_id])
   end
 
   def create
