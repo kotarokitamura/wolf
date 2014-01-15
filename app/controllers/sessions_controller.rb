@@ -6,10 +6,8 @@ class SessionsController < ApplicationController
     if auth["provider"] == "facebook"
       get_facebook_account(auth)
     else
-      # 現在取得しうるのがTwitterだけなので、これでよいが…増える場合は条件分岐を増やす
       get_twitter_account(auth)
     end
-    #latest_tweet = client.user_timeline(116145380,:count => 1).first.text
     redirect_to root_url
   end
 

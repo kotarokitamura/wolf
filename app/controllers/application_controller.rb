@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
   helper_method :current_user
 
   rescue_from Exception, :with => :handle_exceptions unless Rails.application.config.consider_all_requests_local
-
 
   def check_already_sign_in
     redirect_to root_path unless session[:user_id]
@@ -17,13 +15,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  # Check and create session
-  # セッションの確認と確立
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  # resque from error
   def handle_exceptions(e)
     case e
     when InvalidUrlError, ActiveRecord::RecordNotFound, ActionController::RoutingError, ActionController::UnknownAction

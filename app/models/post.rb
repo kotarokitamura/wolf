@@ -13,6 +13,11 @@ class Post < ActiveRecord::Base
     contents << Post.where(user_id: user.id).first
     contents << last_twitter_contents(user) unless user.other_accounts.where(provider: "twitter").first.nil?
     contents << last_facebook_contents(user)
+    self.check_latest_content(contents)
+    Post.exists?(user_id: user.id).nil? ? self.save : self.update_content(user)
+  end
+
+  def check_latest_content(contents)
     contents.each do |content|
       judge = []
       judge << self.content_nil?
@@ -26,7 +31,6 @@ class Post < ActiveRecord::Base
       else
       end
     end
-    Post.exists?(user_id: user.id).nil? ? self.save : self.update_content(user)
   end
 
   def update_content(user)
