@@ -1,4 +1,5 @@
 class Post < ActiveRecord::Base
+  has_many :comments
   belongs_to :user
   HOLD_ON = 1
   HOLD_OFF = 0

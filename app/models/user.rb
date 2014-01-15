@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :other_accounts
   has_many :user_relationships
+  has_many :comments
 
   validates :uid, presence: :true
   validates :name, presence: :true
