@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
     comment = current_user.comments.build(comment_params)
     comment.post_id = params[:post_id]
     comment.save
+    redirect_to new_post_comment_path
   end
 
   private
