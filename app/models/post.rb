@@ -1,4 +1,5 @@
 class Post < ActiveRecord::Base
+  has_many :comments
   belongs_to :user
   HOLD_ON = 1
   HOLD_OFF = 0
@@ -25,7 +26,13 @@ class Post < ActiveRecord::Base
       else
       end
     end
-    Post.exists?(user_id: user.id).nil? ? self.save : self.update(user_id: user.id)
+    Post.exists?(user_id: user.id).nil? ? self.save : self.update_content(user)
+  end
+
+  def update_content(user)
+    latest_content = Post.where(user_id: user.id).first
+    return nil if latest_content.posted_at == self.posted_at
+    Comment.destroy_all(post_id: user.id) if self.update(user_id: user.id)
   end
 
   def hold_flag_on?(user)

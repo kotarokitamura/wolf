@@ -1,0 +1,6 @@
+<h1>new commentss</h1>
+<%= form_for(@post, :url => {action:'create'}) do |f| %>
+  <%= f.text_area :body %>
+  <br>
+  <%= f.submit %>
+<% end %>
