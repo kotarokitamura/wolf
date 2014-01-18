@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     else
       get_twitter_account(auth)
     end
-    redirect_to root_url
+    redirect_to users_path
   end
 
   def get_facebook_account(auth)
@@ -24,6 +24,10 @@ class SessionsController < ApplicationController
       config.access_token        = auth['credentials']['token']
       config.access_token_secret = auth['credentials']['secret']
     end
+  end
+
+  def sign_in
+    render :layout => false
   end
 
   def destroy

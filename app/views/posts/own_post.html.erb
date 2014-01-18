@@ -1,9 +1,16 @@
-<h1> own post </h1>
-<h2><%= @post.body %></h2>
-
+<legend><h2><%= current_user.name %> の投稿</h2></legend>
+<div class="span6">
+  <legend>
+    <h5><%= @post.body %></h5>
+  </legend>
+</div>
+<div class="span2"></div>
+<div class="span8">
 <%= form_for(@post, :url => {action: "update"}) do |f| %>
-  Pin
+  <label>投稿を保持する</label>
   <%= f.check_box :hold_flag,{},1,0 %>
   <br>
-  <%= f.submit %>
+  <br>
+  <%= f.submit :class => "btn btn-primary" %>
 <% end %>
+</div>
