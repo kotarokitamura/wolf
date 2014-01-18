@@ -12,4 +12,8 @@ class UserRelationship < ActiveRecord::Base
     return true if self.last_checked_at.nil?
     user.posts.first.posted_at > self.last_checked_at
   end
+
+  def self.get_relationship(current_user,params)
+    UserRelationship.where(["user_id = ? and followed_id = ?", current_user.id, params[:id]]).first
+  end
 end
