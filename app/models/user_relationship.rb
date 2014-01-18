@@ -9,6 +9,7 @@ class UserRelationship < ActiveRecord::Base
   end
 
   def already_check?(user)
+    return true if self.last_checked_at.nil?
     user.posts.first.posted_at > self.last_checked_at
   end
 end
