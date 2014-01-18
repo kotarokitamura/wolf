@@ -1,6 +1,6 @@
 <h1>menbers you following</h1>
 <%- @menbers.each do |menber| %>
-  <%= menber.name %>
-  <%= "★"  %>
+  <%= link_to menber.name, controller: "posts", action: "show", id: menber.id %>
+  <%= "★" if menber.alreacy_checked_flag %>
   <br>
 <% end %>
