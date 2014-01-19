@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessor :followed_flag, :alreacy_checked_flag
+  attr_accessor :followed_flag, :already_checked_flag
   has_many :posts
   has_many :other_accounts
   has_many :user_relationships

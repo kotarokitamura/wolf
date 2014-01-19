@@ -46,13 +46,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/users">Wolf</a>
+          <a class="brand" href="/users"><div id="logo">Wolf</div></a>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
-              <li><%= link_to "フォロー一覧", "/users"  %></li>
+              <li><%= link_to "つながり", "/users"  %></li>
               <li><%= link_to "新規投稿", "/posts/new"  %></li>
-              <li><%= link_to "自分の投稿", "/posts/#{current_user.posts.first.id}"  %></li>
-              <li><%= link_to "ユーザーを探す", "/all_users"  %></li>
+              <li><%= link_to "あなたの投稿", "/posts/#{current_user.posts.first.id}"  %></li>
+              <li><%= link_to "見つける", "/all_users"  %></li>
               <li><%= link_to "アカウント連携", "/users/#{current_user.id}/other_accounts"  %></li>
               <li><%= link_to "ログアウト", "/logout" %></li>
             </ul>
