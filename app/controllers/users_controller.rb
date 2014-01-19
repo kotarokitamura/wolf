@@ -20,6 +20,8 @@ class UsersController < ApplicationController
   end
 
   def other_accounts
+    @user = current_user
+    @user.twitter_connect_flag = !@user.other_accounts.where(provider: "twitter").first.nil?
     raise ForbiddenError unless current_user_id?
   end
 end
