@@ -27,7 +27,6 @@ class SessionsController < ApplicationController
   end
 
   def sign_in
-    render :layout => false
   end
 
   def destroy
