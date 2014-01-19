@@ -8,10 +8,23 @@
       </a>
     </td>
     <td>
-      <%= link_to user.name, controller: "users", action: "show", id: user.id %>
+      <%= user.name %>
     </td>
     <td>
-      <%== "<i class= 'fa fa-male'style='font-size: 15pt;color: #000066;'></i></id>" if user.followed_flag == 1 %>
+      <%== "フォロー中　<i class= 'fa fa-male'style='font-size: 15pt;color: #000066;'></i></id>" if user.followed_flag == 1 %>
+    </td>
+    <td>
+      <% if user.followed_flag == 1 %>
+        <%= form_for(user, :url => {:controller => 'user_relationships', :action => 'update', :id => user.id}) do |f| %>
+          <%= f.hidden_field :followed_flag ,:value => 0 %>
+          <%= f.submit "解除" ,:class => "btn btn-danger" %>
+        <% end %>
+      <% else  %>
+        <%= form_for(user, :url => {:controller => 'user_relationships', :action => 'update', :id => user.id}) do |f| %>
+          <%= f.hidden_field :followed_flag ,:value => 1 %>
+          <%= f.submit "フォロー" ,:class => "btn btn-primary" %>
+        <% end %>
+      <% end %>
     </td>
   </tr>
   <% end %>

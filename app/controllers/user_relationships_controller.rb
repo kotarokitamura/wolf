@@ -11,6 +11,6 @@ class UserRelationshipsController < ApplicationController
       relationship = UserRelationship.get_relationship(current_user,params)
       UserRelationship.delete(relationship.id) unless relationship.nil?
     end
-    redirect_to controller: "users", action: "index"
+    redirect_to controller: "users", action: "all_users"
   end
 end
