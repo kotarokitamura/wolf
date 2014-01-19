@@ -54,6 +54,7 @@
               <li><%= link_to "自分の投稿", "/posts/#{current_user.posts.first.id}"  %></li>
               <li><%= link_to "ユーザーを探す", "/all_users"  %></li>
               <li><%= link_to "アカウント連携", "/users/#{current_user.id}/other_accounts"  %></li>
+              <li><%= link_to "ログアウト", "/logout" %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -69,7 +70,6 @@
           <%= yield %>
         </div>
         <div class="span2">
-            <%= link_to "log out", "/logout" %>
         </div><!--/span-->
       </div><!--/row-->
       <!--
