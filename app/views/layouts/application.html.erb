@@ -49,8 +49,9 @@
           <a class="brand" href="/users">Wolf</a>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
-              <li><%= link_to "フォローワー一覧", "/users"  %></li>
+              <li><%= link_to "フォロー一覧", "/users"  %></li>
               <li><%= link_to "新規投稿", "/posts/new"  %></li>
+              <li><%= link_to "自分の投稿", "/posts/#{current_user.posts.first.id}"  %></li>
               <li><%= link_to "ユーザーを探す", "/all_users"  %></li>
               <li><%= link_to "アカウント連携", "/users/#{current_user.id}/other_accounts"  %></li>
             </ul>
