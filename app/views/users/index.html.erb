@@ -1,7 +1,7 @@
 <h2>ホーム</h2>
-  <table class="table table-hover">
-  <h3><%= link_to 'ユーザーをフォローしてみよう！' ,'/all_users' if @menbers.first.nil? %></h3>
-<%- @menbers.each do |menber| %>
+<table class="table table-hover">
+<h3><%= link_to 'ユーザーをフォローしてみよう！' ,'/all_users' if @menbers.first.nil? %></h3>
+  <%- @menbers.each do |menber| %>
     <tr>
       <td>
         <a href="posts/<%= "#{menber.id}" %>">
@@ -15,5 +15,5 @@
         <%== "<i class= 'fa fa-check'style='font-size: 15pt;color: #00cc00;'></i></id>" unless menber.already_checked_flag %>
       </td>
     </tr>
-<% end %>
-  </table>
+      <% end %>
+</table>

@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
   def all_users
     @all_users = User.where.not(id: current_user.id)
+    @all_users.map{|user| user.get_followed_flag(current_user)}
   end
 
   def show

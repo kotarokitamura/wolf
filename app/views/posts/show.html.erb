@@ -1,53 +1,48 @@
-<div class="span1">
-  <img src="<%= @post.user.image_url %>">
-</div>
-<div class="span5">
-<h2><%= @post.user.name %></h2>
-</div>
 <legend>
+  <div class="row">
+    <div class="span1">
+      <img src="<%= @post.user.image_url %>">
+    </div>
+    <div class="span5">
+      <h2><%= @post.user.name %></h2>
+    </div>
+  </div>
 </legend>
 
-
 <legend>
-<div class="span1">
-</div>
-<div class="span5">
-    <h4><%= @post.body %></h4>
+  <div class="row">
+    <div class="span5 offset1">
+      <h4><%= @post.body %></h4>
+    </div>
+    <div class="span2">
+    </div>
+  </div>
 </legend>
-</div>
-<div class="span2"></div>
+
 <br>
 <br>
 <br>
-<div class="span8">
-<div class="span6">
-  <h3>コメント</h3>
-  <legend>
-    <table class="table">
-      <% @comments.each do |comment| %>
-        <% next if comment.body.nil? %>
-      <tr>
-        <td width="50">
-          <img src="<%= comment.user.image_url %>" width="30" height="30">
-        </td>
-        <td>
-          <h6><%= comment.body %></h6>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </legend>
-</div>
-<div class="span2"></div>
-</div>
-<div class="span8">
+<h3>コメント</h3>
+  <table class="table">
+    <% @comments.each do |comment| %>
+      <% next if comment.body.nil? %>
+    <tr>
+      <td width="20">
+        <img src="<%= comment.user.image_url %>" width="30" height="30">
+      </td>
+      <td width="150">
+        <h6><%= comment.body %></h6>
+      </td>
+      <td width="100">
+        <h6><%= comment.user.name %></h6>
+      </td>
+    </tr>
+    <% end %>
+   </table>
 <%= form_for shallow_args(@post, @comment), html: { class: 'form-vertical'} do |f| %>
   <%= f.text_area :body %>
   <br>
   <%= f.submit "投稿", :class => "btn btn-primary" %>
 <% end %>
-
 <br>
 <a href="/users" class="btn">一覧へ戻る</a>
-  <br>
-</div>

@@ -1,11 +1,17 @@
-<legend><h2>自分の投稿</h2></legend>
-<div class="span6">
-  <legend>
-    <h4><%= @post.body %></h4>
-  </legend>
+<div class="row">
+  <div class="span6">
+    <legend><h2>自分の投稿</h2></legend>
+  </div>
+  <div class="span2">
+  </div>
 </div>
-<div class="span2"></div>
-<div class="span8">
+<div class="row">
+  <div class="span8">
+    <legend>
+      <h4><%= @post.body %></h4>
+    </legend>
+  </div>
+</div>
 <%= form_for(@post, :url => {action: "update"}) do |f| %>
   <label>投稿を保持する</label>
   <%= f.check_box :hold_flag,{},1,0 %>
@@ -13,4 +19,29 @@
   <br>
   <%= f.submit :class => "btn btn-primary" %>
 <% end %>
-</div>
+<br>
+<br>
+<br>
+<h3>コメント</h3>
+  <table class="table">
+    <% @comments.each do |comment| %>
+      <% next if comment.body.nil? %>
+    <tr>
+      <td width="20">
+        <img src="<%= comment.user.image_url %>" width="30" height="30">
+      </td>
+      <td width="150">
+        <h6><%= comment.body %></h6>
+      </td>
+      <td width="100">
+        <h6><%= comment.user.name %></h6>
+      </td>
+    </tr>
+    <% end %>
+   </table>
+<%= form_for shallow_args(@post, @comment), html: { class: 'form-vertical'} do |f| %>
+  <%= f.text_area :body %>
+  <br>
+  <%= f.submit "投稿", :class => "btn btn-primary" %>
+<% end %>
+<br>
