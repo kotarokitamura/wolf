@@ -25,9 +25,9 @@ class Post < ActiveRecord::Base
 
   def can_save_tweet?(user)
     judge = []
-    judge << !user.other_accounts.where(provider: "twitter").first.nil?
-    judge << first_tweet_exist?(user)
-    !judge.include?(false)
+    return false if user.other_accounts.where(provider: "twitter").first.nil?
+    return false if  !first_tweet_exist?(user)
+    true
   end
 
   def first_tweet_exist?(user)
