@@ -1,9 +1,0 @@
-<h2>フォロー</h2>
-<%- @menbers.each do |menber| %>
-  <table class="table table-striped">
-    <tr>
-      <td><%= link_to menber.name, controller: "posts", action: "show", id: menber.id %></td>
-      <td><%= "★" if menber.alreacy_checked_flag %></td>
-    </tr>
-  <br>
-<% end %>

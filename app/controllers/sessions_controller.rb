@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     else
       get_twitter_account(auth)
     end
+    current_user.posts.build.save_latest_contents(current_user)
     redirect_to users_path
   end
 

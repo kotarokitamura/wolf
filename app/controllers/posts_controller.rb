@@ -21,9 +21,10 @@ class PostsController < ApplicationController
     post.provider = "wolf"
     post.posted_at = Time.now
     old_post = Post.where(user_id: post.user_id).first
-    old_post.nil? ? post.save : old_post.update_attributes( body: post.body, provider: post.provider, hold_flag: post.hold_flag)
+    old_post.nil? ? post.save : old_post.update_attributes( body: post.body, provider: post.provider, hold_flag: post.hold_flag, posted_at: post.posted_at)
     Comment.destroy_all(post_id: old_post.id) unless old_post.nil?
-    redirect_to controller: "posts", action: "show", id: current_user.id
+    new_post = Post.where(user_id: post.user_id).first
+    redirect_to controller: "posts", action: "show", id: new_post.id
   end
 
   def update

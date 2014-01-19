@@ -1,8 +1,19 @@
-<legend><h2><%= @post.user.name %> の投稿</h2></legend>
-<div class="span6">
-  <legend>
+<div class="span1">
+  <img src="<%= @post.user.image_url %>">
+</div>
+<div class="span5">
+<h2><%= @post.user.name %></h2>
+</div>
+<legend>
+</legend>
+
+
+<legend>
+<div class="span1">
+</div>
+<div class="span5">
     <h4><%= @post.body %></h4>
-  </legend>
+</legend>
 </div>
 <div class="span2"></div>
 <br>
@@ -10,9 +21,19 @@
 <div class="span5">
   <h3>コメント</h3>
   <legend>
-    <% @comments.each do |comment| %>
-      <h5><%= comment.body %></h5>
-    <% end %>
+    <table>
+      <% @comments.each do |comment| %>
+        <% next if comment.body.nil? %>
+      <tr>
+        <td>
+          <img src="<%= comment.user.image_url %>" width="30" height="30">
+        </td>
+        <td>
+          <h5><%= comment.body %></h5>
+        </td>
+      </tr>
+      <% end %>
+    </table>
   </legend>
 </div>
 <div class="span3"></div>
