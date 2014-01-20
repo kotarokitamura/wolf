@@ -55,7 +55,7 @@ class Post < ActiveRecord::Base
   def update_content(user)
     latest_content = Post.where(user_id: user.id).first
     return nil if latest_content.posted_at == self.posted_at
-    Comment.destroy_all(post_id: user.id) if self.update(user_id: user.id)
+    Comment.destroy_all(post_id: latest_content.id) if latest_content.update_attributes(body: self.body,provider: self.provider,posted_at: self.posted_at)
   end
 
   def hold_flag_on?(user)
