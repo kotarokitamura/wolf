@@ -1,10 +1,6 @@
 class Post < ActiveRecord::Base
   has_many :comments
   belongs_to :user
-  HOLD_ON = 1
-  HOLD_OFF = 0
-  TWITTER_CONSUMER_KEY = "qQb1VxwVDyVJ4mRvmaZ0g"
-  TWITTER_CONSUMER_SECRET = "oO6V2rIlJOAJ1LSf5qgzd0KSkJCVvl3SfjSGEmr98"
 
   validates :body,
             :length => {:maximum => ResourceProperty.post_body_max_length},
@@ -46,7 +42,7 @@ class Post < ActiveRecord::Base
         self.body = content.body
         self.posted_at = content.posted_at
         self.provider = content.provider
-        self.hold_flag = HOLD_OFF
+        self.hold_flag = ResourceProperty.post_hold_off
       else
       end
     end
@@ -60,7 +56,7 @@ class Post < ActiveRecord::Base
 
   def hold_flag_on?(user)
     return false if user.posts.first.nil?
-    user.posts.first.hold_flag == HOLD_ON
+    user.posts.first.hold_flag == ResourceProperty.post_hold_on
   end
 
   def content_new?(content)
@@ -84,8 +80,8 @@ class Post < ActiveRecord::Base
   def get_twitter_client(user)
     user_twitter_account = user.other_accounts.where(provider: "twitter").first
     client = Twitter::REST::Client.new do |config|
-      config.consumer_key = TWITTER_CONSUMER_KEY
-      config.consumer_secret = TWITTER_CONSUMER_SECRET
+      config.consumer_key = ResourceProperty.twitter_consumer_key
+      config.consumer_secret = ResourceProperty.twitter_consumer_secret
       config.access_token = user_twitter_account.access_token
       config.access_token_secret = user_twitter_account.access_token_secret
     end

@@ -34,6 +34,6 @@ class User < ActiveRecord::Base
     menbers = User.get_following_users(current_user)
     follow_id = []
     menbers.map {|menber| follow_id << menber.id}
-    self.followed_flag = follow_id.include?(self.id)? 1 : 0
+    self.followed_flag = follow_id.include?(self.id)? ResourceProperty.user_followed : ResourceProperty.user_unfollowed
   end
 end

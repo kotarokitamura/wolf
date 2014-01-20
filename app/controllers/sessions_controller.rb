@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-  TWITTER_CONSUMER_KEY = "qQb1VxwVDyVJ4mRvmaZ0g"
-  TWITTER_CONSUMER_SECRET = "oO6V2rIlJOAJ1LSf5qgzd0KSkJCVvl3SfjSGEmr98"
   def create
     auth = request.env["omniauth.auth"]
     if auth["provider"] == "facebook"
@@ -20,8 +18,8 @@ class SessionsController < ApplicationController
   def get_twitter_account(auth)
     user = OtherAccount.find_by_provider_and_uid(auth["provider"], auth["uid"]) || OtherAccount.create_with_omniauth(auth,current_user)
     client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = TWITTER_CONSUMER_KEY
-      config.consumer_secret     = TWITTER_CONSUMER_SECRET
+      config.consumer_key        = ResourceProperty.twitter_consumer_key
+      config.consumer_secret     = ResourceProperty.twitter_consumer_secret
       config.access_token        = auth['credentials']['token']
       config.access_token_secret = auth['credentials']['secret']
     end
