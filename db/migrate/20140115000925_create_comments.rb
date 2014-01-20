@@ -3,7 +3,7 @@ class CreateComments < ActiveRecord::Migration
     create_table :comments do |t|
       t.references :user, index: true
       t.references :post, index: true
-      t.string :body
+      t.text :body, :limit => 2000
 
       t.timestamps
     end
