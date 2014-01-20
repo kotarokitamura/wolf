@@ -17,10 +17,23 @@ class Post < ActiveRecord::Base
     self.user_id = user.id
     contents = []
     contents << Post.where(user_id: user.id).first
-    contents << last_twitter_contents(user) unless user.other_accounts.where(provider: "twitter").first.nil?
+    contents << last_twitter_contents(user) if can_save_tweet?(user)
     contents << last_facebook_contents(user)
     self.check_latest_content(contents)
     Post.exists?(user_id: user.id).nil? ? self.save : self.update_content(user)
+  end
+
+  def can_save_tweet?(user)
+    judge = []
+    return false if user.other_accounts.where(provider: "twitter").first.nil?
+    return false if  !first_tweet_exist?(user)
+    true
+  end
+
+  def first_tweet_exist?(user)
+    user_twitter_account = user.other_accounts.where(provider: "twitter").first
+    client = get_twitter_client(user)
+    !client.user_timeline(user_twitter_account.uid.to_i, :count => 1).first.nil?
   end
 
   def check_latest_content(contents)
@@ -42,7 +55,7 @@ class Post < ActiveRecord::Base
   def update_content(user)
     latest_content = Post.where(user_id: user.id).first
     return nil if latest_content.posted_at == self.posted_at
-    Comment.destroy_all(post_id: user.id) if self.update(user_id: user.id)
+    Comment.destroy_all(post_id: latest_content.id) if latest_content.update_attributes(body: self.body,provider: self.provider,posted_at: self.posted_at)
   end
 
   def hold_flag_on?(user)
@@ -60,17 +73,23 @@ class Post < ActiveRecord::Base
 
   def last_twitter_contents(user)
     user_twitter_account = user.other_accounts.where(provider: "twitter").first
+    client = get_twitter_client(user)
+    last_tweet =  Post.new
+    last_tweet.body = client.user_timeline(user_twitter_account.uid.to_i, :count => 1).first.text
+    last_tweet.posted_at = client.user_timeline(user_twitter_account.uid.to_i, :count => 1).first.created_at
+    last_tweet.provider = "twitter"
+    last_tweet
+  end
+
+  def get_twitter_client(user)
+    user_twitter_account = user.other_accounts.where(provider: "twitter").first
     client = Twitter::REST::Client.new do |config|
       config.consumer_key = TWITTER_CONSUMER_KEY
       config.consumer_secret = TWITTER_CONSUMER_SECRET
       config.access_token = user_twitter_account.access_token
       config.access_token_secret = user_twitter_account.access_token_secret
     end
-    last_tweet =  Post.new
-    last_tweet.body = client.user_timeline(user_twitter_account.uid.to_i, :count => 1).first.text
-    last_tweet.posted_at = client.user_timeline(user_twitter_account.uid.to_i, :count => 1).first.created_at
-    last_tweet.provider = "twitter"
-    last_tweet
+    client
   end
 
   def last_facebook_contents(user)

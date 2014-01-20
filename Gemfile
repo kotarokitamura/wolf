@@ -54,3 +54,12 @@ gem 'koala'
 
 # To Tweet and get some tweets
 gem 'twitter'
+
+# To use Twitterbootstrap
+gem 'simple_form'
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+
+# To use fron awesome
+gem 'font-awesome-rails'

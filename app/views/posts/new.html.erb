@@ -1,12 +1,15 @@
-<h1>Post#new</h1>
-
+<legend><h2>新規投稿</h2></legend>
+<br>
 <%= form_for(@post) do |f| %>
-  Body<br>
+  <label>本文</label>
   <%= f.text_area :body %>
   <br>
   <br>
-  Pin
+  <br>
+  <label>投稿を保持する</label>
   <%= f.check_box :hold_flag,{},1,0 %>
   <br>
-  <%= f.submit %>
+  <br>
+  <br>
+  <%= f.submit :class => "btn btn-primary" %>
 <% end %>

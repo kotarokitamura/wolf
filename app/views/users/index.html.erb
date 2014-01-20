@@ -1,6 +1,19 @@
-<h1>menbers you following</h1>
-<%- @menbers.each do |menber| %>
-  <%= link_to menber.name, controller: "posts", action: "show", id: menber.id %>
-  <%= "★" if menber.alreacy_checked_flag %>
-  <br>
-<% end %>
+<h2>ホーム</h2>
+<table class="table table-hover">
+<h3><%= link_to 'ユーザーをフォローしてみよう！' ,'/all_users' if @menbers.first.nil? %></h3>
+  <%- @menbers.each do |menber| %>
+    <tr>
+      <td>
+        <a href="posts/<%= "#{menber.id}" %>">
+          <img src="<%= "#{menber.image_url}" %>" width="25" height="25" >
+        </a>
+      </td>
+      <td>
+         <%= link_to menber.name, controller: "posts", action: "show", id: menber.id %>
+      </td>
+      <td>
+        <%== "<i class= 'fa fa-check'style='font-size: 15pt;color: #00cc00;'></i></id>" unless menber.already_checked_flag %>
+      </td>
+    </tr>
+      <% end %>
+</table>

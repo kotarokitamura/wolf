@@ -4,12 +4,13 @@ class UsersController < ApplicationController
     @menbers = User.get_following_users(current_user)
     @menbers.each do |user|
       user.posts.first.nil? ? user.posts.build.save_latest_contents(user) : user.posts.first.save_latest_contents(user)
-    @menbers.map{|user| user.alreacy_checked_flag = current_user.user_relationships.where(followed_id: user.id).first.already_check?(user)}
+    @menbers.map{|user| user.already_checked_flag = current_user.user_relationships.where(followed_id: user.id).first.already_check?(user)}
     end
   end
 
   def all_users
     @all_users = User.where.not(id: current_user.id)
+    @all_users.map{|user| user.get_followed_flag(current_user)}
   end
 
   def show
@@ -19,6 +20,8 @@ class UsersController < ApplicationController
   end
 
   def other_accounts
+    @user = current_user
+    @user.twitter_connect_flag = !@user.other_accounts.where(provider: "twitter").first.nil?
     raise ForbiddenError unless current_user_id?
   end
 end

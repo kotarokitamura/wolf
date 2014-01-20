@@ -1,2 +1,6 @@
-<h1>Other accounts<h1>
-<%= link_to "Twitterでログインする", "../../auth/twitter" %>
+<legend><h2>アカウントを追加する</h2></legend>
+<br>
+<h3>Twitterでログイン</h3>
+<button class="btn btn-large btn-twitter" onclick="location.href='/auth/twitter'"><i class="fa fa-twitter"></i> | connect with twitter</button>
+<%== "<i class= 'fa fa-check'style='font-size: 15pt;color: #00cc00;'></i></id>" if @user.twitter_connect_flag %>
+

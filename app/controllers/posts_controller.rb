@@ -4,9 +4,11 @@ class PostsController < ApplicationController
     raise ForbiddenError if User.where(id: params[:id]).first.nil?
     user_relationship = current_user.user_relationships.where(followed_id: params[:id]).first
     user_relationship.update_last_checked_time unless user_relationship.nil?
-    contents = (Post.find_by user_id: params[:id]) || User.where(id: params[:id]).first.posts.build
+    contents = (Post.find_by id: params[:id]) || User.where(id: current_user.id).first.posts.build
     contents.save_latest_contents(contents.user)
-    @post = Post.where(user_id:params[:id]).first
+    @post = Post.where(id: params[:id]).first
+    @comments = @post.comments
+    @comment = @post.comments.build
     render 'own_post' if @post.user_id == current_user.id
   end
 
@@ -19,9 +21,10 @@ class PostsController < ApplicationController
     post.provider = "wolf"
     post.posted_at = Time.now
     old_post = Post.where(user_id: post.user_id).first
-    old_post.nil? ? post.save : old_post.update_attributes( body: post.body, provider: post.provider, hold_flag: post.hold_flag)
+    old_post.nil? ? post.save : old_post.update_attributes( body: post.body, provider: post.provider, hold_flag: post.hold_flag, posted_at: post.posted_at)
     Comment.destroy_all(post_id: old_post.id) unless old_post.nil?
-    redirect_to new_post_path
+    new_post = Post.where(user_id: post.user_id).first
+    redirect_to controller: "posts", action: "show", id: new_post.id
   end
 
   def update
@@ -30,7 +33,6 @@ class PostsController < ApplicationController
     post.update_attributes( hold_flag: new_post.hold_flag )
     redirect_to post_path
   end
-
 
   private
     def post_params

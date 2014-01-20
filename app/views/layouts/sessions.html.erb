@@ -38,28 +38,6 @@
   </head>
   <body>
 
-    <div class="navbar navbar-fluid-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="/users"><div id="logo">Wolf</div></a>
-          <div class="container-fluid nav-collapse">
-            <ul class="nav">
-              <li><%= link_to "ホーム", "/users"  %></li>
-              <li><%= link_to "新規投稿", "/posts/new"  %></li>
-              <li><%= link_to "あなたの投稿", "/posts/#{current_user.posts.first.id}"  %></li>
-              <li><%= link_to "見つける", "/all_users"  %></li>
-              <li><%= link_to "アカウント連携", "/users/#{current_user.id}/other_accounts"  %></li>
-              <li><%= link_to "ログアウト", "/logout" %></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
-    </div>
 
     <div class="container-fluid">
       <div class="row-fluid">
