@@ -3,7 +3,7 @@ class Comment < ActiveRecord::Base
   belongs_to :post
 
   validates :body,
-            :length => {:maximum => 1000},
+            :length => {:maximum => ResourceProperty.comment_max_length},
             :presence => true
   validates :post_id,
             :presence => true

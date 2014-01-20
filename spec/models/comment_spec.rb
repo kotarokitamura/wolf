@@ -8,18 +8,17 @@ describe Comment do
     @comment = Comment.new
     @comment.user_id = USER_ID
     @comment.post_id = POST_ID
-    @comment.body = 'aaa'
   end
 
   context 'Added comment correct pattern' do
     it 'should insert correct pattern in English' do
-      @comment.body = 'a' * 1000
+      @comment.body = 'a' * ResourceProperty.comment_max_length
       @comment.save
       Comment.last.body.should == @comment.body
     end
 
     it 'should insert correct pattern in Japanese' do
-      @comment.body = 'あ' * 1000
+      @comment.body = 'あ' * ResourceProperty.comment_max_length
       @comment.save
       Comment.last.body.should == @comment.body
     end
@@ -35,12 +34,12 @@ describe Comment do
     end
 
     it 'should return false when over max_letters in Japanese' do
-      @comment.body = 'あ' * 1001
+      @comment.body = 'あ' * ResourceProperty.comment_max_length + 'あ'
       @comment.save.should be_false
     end
 
     it 'should return false when over max_letters in English' do
-      @comment.body = 'a' * 1001
+      @comment.body = 'a' * ResourceProperty.comment_max_length + 'a'
       @comment.save.should be_false
     end
   end
