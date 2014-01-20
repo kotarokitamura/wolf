@@ -1,1 +1,2 @@
-comment_max_length: 1000
+comment_body_max_length: 1000
+post_body_max_length: 5000

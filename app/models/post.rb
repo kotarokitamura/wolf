@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
   TWITTER_CONSUMER_SECRET = "oO6V2rIlJOAJ1LSf5qgzd0KSkJCVvl3SfjSGEmr98"
 
   validates :body,
-            :length => {:maximum => 5000},
+            :length => {:maximum => ResourceProperty.post_body_max_length},
             :presence => true
   validates :user_id,
             :presence => true
