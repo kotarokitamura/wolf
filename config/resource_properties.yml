@@ -1,0 +1,10 @@
+comment_body_max_length: 1000
+post_body_max_length: 5000
+user_followed: 1
+user_unfollowed: 0
+post_hold_on: 1
+post_hold_off: 0
+twitter_consumer_key: 'qQb1VxwVDyVJ4mRvmaZ0g'
+twitter_consumer_secret: 'oO6V2rIlJOAJ1LSf5qgzd0KSkJCVvl3SfjSGEmr98'
+facebook_app_id: '381647438647066'
+facebook_app_secret: 'd57272d602117cd8a50eeeebc5594525'
