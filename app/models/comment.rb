@@ -6,7 +6,9 @@ class Comment < ActiveRecord::Base
             :length => {:maximum => ResourceProperty.comment_body_max_length},
             :presence => true
   validates :post_id,
-            :presence => true
+            :presence => true,
+            :numericality => {:only_integer => true} 
   validates :user_id,
-            :presence => true
+            :presence => true,
+            :numericality => {:only_integer => true} 
 end
