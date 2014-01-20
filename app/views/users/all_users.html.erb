@@ -3,9 +3,7 @@
   <% @all_users.each do |user| %>
   <tr>
     <td>
-      <a href="users/<%= "#{user.id}" %>">
-        <img src="<%= "#{user.image_url}" %>" width="25" height="25" >
-      </a>
+      <img src="<%= "#{user.image_url}" %>" width="25" height="25" >
     </td>
     <td>
       <%= user.name %>
