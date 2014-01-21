@@ -56,7 +56,13 @@ describe UserRelationship do
     it 'should be return false already_checked' do
       current_user = User.last
       checked_user = User.first
-      current_user.user_relationships.where(followed_id: checked_user.id).first.already_check?(checked_user).should be_false
+      current_user.user_relationships.where(followed_id: checked_user.id).first.already_check?(checked_user).should be_true
+    end
+
+    it 'should be return true get_relationship' do
+      params = {:id => User.last.id}
+      current_user = User.first
+      (UserRelationship.get_relationship(current_user,params).id == UserRelationship.where(["user_id = ? and followed_id = ?", current_user.id, params[:id]]).first.id).should be_true
     end
   end
 end
