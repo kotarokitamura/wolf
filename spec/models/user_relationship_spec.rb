@@ -46,5 +46,17 @@ describe UserRelationship do
       new_user_relationship = UserRelationship.first
       (new_user_relationship.last_checked_at > old_last_checked_at).should be_true
     end
+
+    it 'should be return true already_checked' do
+      current_user = User.first
+      checked_user = User.last
+      current_user.user_relationships.where(followed_id: checked_user.id).first.already_check?(checked_user).should be_false
+    end
+
+    it 'should be return false already_checked' do
+      current_user = User.last
+      checked_user = User.first
+      current_user.user_relationships.where(followed_id: checked_user.id).first.already_check?(checked_user).should be_false
+    end
   end
 end
