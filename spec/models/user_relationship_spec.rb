@@ -2,6 +2,8 @@
 require 'spec_helper'
 
 describe UserRelationship do
+  fixtures :user_relationships,:users,:posts
+
   before do
     @user_relationship = UserRelationship.new
     @user_relationship.user_id = 1
@@ -33,6 +35,16 @@ describe UserRelationship do
     it 'should return false when followed_id except number' do
       @user_relationship.followed_id = 'a'
       @user_relationship.save.should be_false
+    end
+  end
+
+  context 'using some original methods' do
+    it 'should be return true when update_last_checked_time' do
+      old_user_relationship = UserRelationship.first
+      old_last_checked_at = old_user_relationship.last_checked_at
+      old_user_relationship.update_last_checked_time
+      new_user_relationship = UserRelationship.first
+      (new_user_relationship.last_checked_at > old_last_checked_at).should be_true
     end
   end
 end
