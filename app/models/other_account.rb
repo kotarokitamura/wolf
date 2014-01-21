@@ -3,6 +3,12 @@ class OtherAccount < ActiveRecord::Base
 
   validates :uid, presence: :true
   validates :user_id, presence: :true
+  validates :name,
+            :length => {:maximum => ResourceProperty.name_max_length}
+  validates :email,
+            :length => {:maximum => ResourceProperty.email_max_length}
+
+  validates_uniqueness_of :uid
 
   def self.create_with_omniauth(auth,current_user)
     create! do |other_account|

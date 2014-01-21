@@ -1,5 +1,7 @@
 comment_body_max_length: 1000
 post_body_max_length: 5000
+email_max_length: 256
+name_max_length: 100
 user_followed: 1
 user_unfollowed: 0
 post_hold_on: 1
