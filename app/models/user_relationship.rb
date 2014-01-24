@@ -9,6 +9,9 @@ class UserRelationship < ActiveRecord::Base
             presence: :true,
             :numericality => {:only_integer => true}
 
+  validates :email,
+            :length => {:maximum => ResourceProperty.email_max_length}
+
   def update_last_checked_time
     self.update_attributes(last_checked_at: Time.now)
   end

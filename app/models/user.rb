@@ -5,8 +5,12 @@ class User < ActiveRecord::Base
   has_many :user_relationships
   has_many :comments
 
-  validates :uid, presence: :true
-  validates :name, presence: :true
+  validates :uid,
+            :presence => true
+
+  validates :name,
+            :length => {:maximum => ResourceProperty.name_max_length},
+            :presence => true
 
   validates_uniqueness_of :uid
 
