@@ -6,7 +6,10 @@ class Post < ActiveRecord::Base
             :length => {:maximum => ResourceProperty.post_body_max_length},
             :presence => true
   validates :user_id,
-            :presence => true
+            :presence => true,
+            :numericality => {:only_integer => true}
+  validates :hold_flag,
+            :numericality => {:only_integer => true}
 
   def save_latest_contents(user)
     return nil if hold_flag_on?(user)
@@ -20,9 +23,8 @@ class Post < ActiveRecord::Base
   end
 
   def can_save_tweet?(user)
-    judge = []
-    return false if user.other_accounts.where(provider: "twitter").first.nil?
-    return false if  !first_tweet_exist?(user)
+    return false unless OtherAccount.twitter_account_exist?(user)
+    return false unless first_tweet_exist?(user)
     true
   end
 

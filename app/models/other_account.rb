@@ -21,4 +21,8 @@ class OtherAccount < ActiveRecord::Base
       other_account.image_url = auth["info"]["image"]
     end
   end
+
+  def self.twitter_account_exist?(user)
+    !user.other_accounts.where(provider: 'twitter').first.nil?
+  end
 end

@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe OtherAccount do
-  fixtures :users,:other_accounts
+  fixtures :users, :other_accounts
   before do
     @other_account = OtherAccount.new
     @other_account.user_id = 1
@@ -36,6 +36,18 @@ describe OtherAccount do
     it 'should return false when insert user_id nil' do
       @other_account.user_id = nil
       @other_account.save.should  be_false
+    end
+  end
+
+  context 'Use twitter_account_exist? method' do
+    it 'should be return true when having twitter account' do
+      user = User.first
+      OtherAccount.twitter_account_exist?(user).should be_true
+    end
+
+    it 'should be return false when having twitter account' do
+      user = User.where(id: 2).first
+      OtherAccount.twitter_account_exist?(user).should be_false
     end
   end
 end
