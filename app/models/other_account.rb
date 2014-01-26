@@ -3,6 +3,12 @@ class OtherAccount < ActiveRecord::Base
 
   validates :uid, presence: :true
   validates :user_id, presence: :true
+  validates :name,
+            :length => {:maximum => ResourceProperty.name_max_length}
+  validates :email,
+            :length => {:maximum => ResourceProperty.email_max_length}
+
+  validates_uniqueness_of :uid
 
   def self.create_with_omniauth(auth,current_user)
     create! do |other_account|
@@ -14,5 +20,9 @@ class OtherAccount < ActiveRecord::Base
       other_account.access_token_secret = auth["credentials"]["secret"]
       other_account.image_url = auth["info"]["image"]
     end
+  end
+
+  def self.twitter_account_exist?(user)
+    !user.other_accounts.where(provider: 'twitter').first.nil?
   end
 end

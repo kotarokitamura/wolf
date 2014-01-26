@@ -1,0 +1,23 @@
+user1:
+  id: 1
+  uid: '100007112803137'
+  name: 'Taro Tanaka'
+  first_name: 'Taro'
+  last_name: 'Tanaka'
+  image_url: 'http://graph.facebook.com/100007112803137/picture?type=square'
+  email: 'test@example.com'
+  access_token: 'CAAFbGzgCjxoBACoNc9pKLLEFohgxZCtpeFMo4gU7rmyAAHdBkUQEKy66ZCuCNG3rZA2AkPwGM8akNQ4kZCwxw871VvpJlEZAGMRCD3rYCA28BcUJtPAZAmJeHyLECVLbsVZAZCdZAN6OdvTeFNk4vtsdwURZAHS2W4WcFUXbyeUviLtZCmISnzSpOPW'
+  created_at: '2013-09-03 07:45:46'
+  updated_at: '2013-09-03 07:45:46'
+
+user2:
+  id: 2
+  uid: '100007097053218'
+  name: 'Satoko Yamasa'
+  first_name: 'Satoko'
+  last_name: 'Yamada'
+  image_url: 'http://graph.facebook.com/100007097053218/picture?type=square'
+  email: 'test2@example.com'
+  access_token: 'CAAFbGzgCjxoBAA4ZAzZArNdJmhzDCYgZBvZAJZAhBNkojjS5YZC1S1ttAhtfzH13RD6q3g4Yci10HPgksCXr50w253vIwBjcxRSUuYpXw0ZCPPNJttJbYnkMaUc64s3YTK0msmaoZClSZCx3pnfuAMiHNdzH9dpj4EhoY1DMFIwoliAWF540HtRda'
+  created_at: '2013-09-02 07:45:46'
+  updated_at: '2013-09-02 07:45:46'

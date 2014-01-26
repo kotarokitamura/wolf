@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140115000925) do
 
   create_table "posts", force: true do |t|
     t.integer  "user_id"
-    t.string   "body"
+    t.text     "body"
     t.string   "provider"
     t.integer  "hold_flag",  default: 0
     t.datetime "posted_at"
