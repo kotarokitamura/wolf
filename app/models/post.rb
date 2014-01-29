@@ -11,6 +11,10 @@ class Post < ActiveRecord::Base
   validates :hold_flag,
             :numericality => {:only_integer => true}
 
+  def count_post_checked_user
+    UserRelationship.where(["followed_id = ? and last_checked_at > ?", self.user.id, self.posted_at]).count
+  end
+
   def save_latest_contents(user)
     return nil if hold_flag_on?(user)
     self.user_id = user.id

@@ -64,4 +64,16 @@ describe Post do
       @post.hold_flag_on?(user).should == judge
     end
   end
+
+  context 'Using count_post_checked_user' do
+    it 'should retturn correct count' do
+      post = Post.first
+      post.count_post_checked_user.should == UserRelationship.where(["followed_id = ? and last_checked_at > ?", post.user.id, post.posted_at]).count
+    end
+
+    it 'should retturn correct count' do
+      post = Post.where(2).first
+      post.count_post_checked_user.should == UserRelationship.where(["followed_id = ? and last_checked_at > ?", post.user.id, post.posted_at]).count
+    end
+  end
 end

@@ -4,11 +4,15 @@ class PostsController < ApplicationController
     raise ForbiddenError if User.where(id: params[:id]).first.nil?
     user_relationship = current_user.user_relationships.where(followed_id: params[:id]).first
     user_relationship.update_last_checked_time unless user_relationship.nil?
-    contents = (Post.find_by id: params[:id]) || User.where(id: current_user.id).first.posts.build
-    contents.save_latest_contents(contents.user)
+    content = (Post.find_by id: params[:id]) || User.where(id: current_user.id).first.posts.build
+    content.save_latest_contents(content.user)
     @post = Post.where(id: params[:id]).first
     @comments = @post.comments
     @comment = @post.comments.build
+
+    @checked_count = @post.count_post_checked_user if @post.user_id == current_user.id
+    @all_follower = UserRelationship.count_all_follower(current_user) if @post.user_id == current_user.id
+
     render 'own_post' if @post.user_id == current_user.id
   end
 
