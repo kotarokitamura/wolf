@@ -63,3 +63,6 @@ gem 'twitter-bootstrap-rails'
 
 # To use fron awesome
 gem 'font-awesome-rails'
+
+#use unicorn
+gem 'unicorn'
