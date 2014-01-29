@@ -18,6 +18,10 @@ class UserRelationship < ActiveRecord::Base
     user.posts.first.posted_at < self.last_checked_at
   end
 
+  def self.count_all_follower(user)
+    UserRelationship.where(followed_id: user.id).count
+  end
+
   def self.get_relationship(current_user,params)
     UserRelationship.where(["user_id = ? and followed_id = ?", current_user.id, params[:id]]).first
   end

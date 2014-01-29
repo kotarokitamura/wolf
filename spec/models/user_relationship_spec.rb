@@ -65,4 +65,11 @@ describe UserRelationship do
       (UserRelationship.get_relationship(current_user,params).id == UserRelationship.where(["user_id = ? and followed_id = ?", current_user.id, params[:id]]).first.id).should be_true
     end
   end
+
+  context 'Using count_all_follower' do
+    it 'should be return correct count' do
+      user = User.first
+      UserRelationship.count_all_follower(user).should == UserRelationship.where(followed_id: user.id).count
+    end
+  end
 end
